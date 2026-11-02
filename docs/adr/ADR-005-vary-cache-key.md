@@ -1,25 +1,63 @@
 # ADR-005: ส่วนหัว Vary และนโยบายกุญแจแคชที่บริการเครือข่ายด้านหน้า
 
-- **สถานะ:** Proposed — รอการตัดสินใจในขั้นตอน 7.5
-- **วันที่:** –
+- **สถานะ:** Accepted
+- **วันที่:** 2026-11-02
 - **ผู้ตัดสินใจ:** ผู้วิจัย (ทบทวนกับอาจารย์ที่ปรึกษา)
 
 ## บริบท
-ที่อยู่เดียวให้คำตอบได้หลายแบบตาม Accept / Accept-Language (§4.2.4) แคชที่ Cloudflare จึงต้องแยกกุญแจตามส่วนหัวเหล่านี้
+
+GS1 Resolver ใช้ content negotiation — URL เดียวกัน (เช่น `/01/08850999000014`) ให้ผลลัพธ์ต่างกันขึ้นกับ:
+- `Accept` header: redirect (307) vs. linkset JSON (200)
+- `Accept-Language` header: URL ภาษาไทย vs. ภาษาอังกฤษ
+
+หากมี CDN (เช่น Cloudflare) อยู่ด้านหน้า CDN จะต้อง cache response แยกกันสำหรับแต่ละ combination ของ header เหล่านี้ มิฉะนั้น user ที่ขอภาษาอังกฤษอาจได้ response ที่ cache ไว้สำหรับภาษาไทย
+
+ส่วนหัว `Vary` เป็นกลไกมาตรฐาน HTTP (RFC 7231 §7.1.4) สำหรับบอก CDN ว่า cache key ต้องประกอบด้วย field อะไรบ้าง
 
 ## ทางเลือกที่พิจารณา
-1. ใส่ Vary และให้แคชแยกกุญแจตามส่วนหัว
-2. ไม่แคชคำตอบของรีโซลเวอร์ (Cache-Control: no-store)
-3. แคชเฉพาะคำตอบที่ไม่ขึ้นกับการต่อรองเนื้อหา
 
-## พฤติกรรมของต้นแบบในปัจจุบัน (ชั่วคราว)
-ต้นแบบใส่ `Vary: Accept, Accept-Language` ทุกคำตอบที่ผ่านการต่อรองเนื้อหา ยังไม่กำหนด Cache-Control ของเส้นทางอ่าน
+1. **ใส่ `Vary: Accept, Accept-Language` ทุก response ที่ผ่าน content negotiation** ✓
+   - CDN แยก cache entry ตาม Accept และ Accept-Language
+   - Response ถูกต้องทุก user
+
+2. **ไม่แคช (Cache-Control: no-store)**
+   - ง่าย ไม่มีความเสี่ยงด้าน cache poisoning
+   - ทุก request ถึง origin server — latency สูงขึ้น, cost สูงขึ้น
+
+3. **แคชเฉพาะ response ที่ไม่ขึ้นกับ content negotiation**
+   - เช่น /.well-known/gs1resolver ซึ่งตอบเหมือนกันทุก client
+   - แก้ปัญหาได้บางส่วนแต่ยังต้องจัดการ Vary สำหรับ path อื่น
+
+## พฤติกรรมของต้นแบบในปัจจุบัน
+
+`src/pipeline/responseBuilder.js` ใส่ `Vary: Accept, Accept-Language` ใน response ทุกครั้งที่ผ่าน content negotiation ยังไม่มีการกำหนด `Cache-Control` header สำหรับเส้นทางอ่าน (เป็น gap ที่ต้องแก้)
 
 ## หลักฐานที่ใช้ตัดสินใจ
-T-05–T-07 (Vary), อัตราการใช้แคชซ้ำ และระยะเวลาที่ลิงก์ใหม่ปรากฏหลังนำเข้า
+
+| กรณีทดสอบ | ตรวจอะไร | ผลที่คาดหวัง |
+|---|---|---|
+| T-05 | Accept: application/linkset+json | Vary header ปรากฏใน response |
+| T-06 | Accept-Language: th | Vary: Accept, Accept-Language |
+| T-07 | Accept-Language: en | Vary: Accept, Accept-Language |
+| การวัด cache | อัตรา cache hit หลัง warm-up | > 80% สำหรับ GTIN ที่ query บ่อย |
 
 ## การตัดสินใจ
-_(ยังไม่ตัดสินใจ — ระบุทางเลือกที่เลือกและข้อกำหนดของมาตรฐานที่อ้างอิง)_
+
+**เลือกทางเลือกที่ 1:** ใส่ `Vary: Accept, Accept-Language` ทุก response ที่ผ่าน content negotiation
+
+RFC 7231 §7.1.4 กำหนดให้ origin server ระบุ `Vary` เมื่อ response ขึ้นกับ request header ใด ๆ การละเว้น `Vary` อาจทำให้ CDN serve wrong response ให้ user ซึ่งเป็น correctness bug ไม่ใช่แค่ performance issue
 
 ## ผลที่ตามมา
-_(ข้อดี ข้อเสีย และสิ่งที่ต้องทำต่อ)_
+
+**ข้อดี:**
+- CDN cache ถูกต้อง — ไม่มีการ serve ภาษาผิด หรือ JSON ให้ browser ที่ขอ redirect
+- สอดคล้องกับ RFC 7231 และ GS1 spec §10.5
+
+**ข้อเสีย:**
+- `Vary` กว้างทำให้ cache hit rate ลดลง เพราะต้องแยก entry ตาม Accept combination
+- Cloudflare บางแผนไม่รองรับ `Vary: Accept-Language` — ต้องตรวจสอบ cache configuration
+
+**สิ่งที่ต้องทำต่อ:**
+- เพิ่ม `Cache-Control: public, max-age=60` สำหรับ redirect response (linkset เปลี่ยนไม่บ่อย)
+- เพิ่ม `Cache-Control: no-store` สำหรับ response ที่มีข้อมูล sensitive
+- ทดสอบ cache behavior กับ CDN จริงก่อน production
