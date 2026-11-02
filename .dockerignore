@@ -1,0 +1,7 @@
+node_modules
+results
+data/generated
+docs
+tests
+scripts
+.DS_Store

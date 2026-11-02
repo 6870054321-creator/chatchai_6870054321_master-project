@@ -1,0 +1,23 @@
+{
+  "name": "gs1th-linkset-layer-poc",
+  "version": "0.2.0",
+  "description": "Proof of concept: Linkset Management Layer for a GS1-conformant resolver (master project, Chulalongkorn University)",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test tests/unit.test.js tests/ingest.test.js",
+    "probe": "node tests/run-cases.js",
+    "probe:3rounds": "node tests/run-cases.js --rounds 3",
+    "data": "node scripts/generate-data.js --links 10000 && node scripts/generate-data.js --links 100000",
+    "bench": "node tests/bench.js",
+    "export:ce": "node scripts/export-ce.js",
+    "start:10k": "DATA_FILE=data/generated/linksets-10000.json LOG_REQUESTS=0 node src/server.js",
+    "start:100k": "DATA_FILE=data/generated/linksets-100000.json LOG_REQUESTS=0 node src/server.js",
+    "bench:10k": "node tests/bench.js --data data/generated/linksets-10000.json --label poc-10k",
+    "bench:100k": "node tests/bench.js --data data/generated/linksets-100000.json --label poc-100k"
+  }
+}

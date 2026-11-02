@@ -1,0 +1,17 @@
+services:
+  linkset-layer:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      RESOLVER_ROOT: http://localhost:8080
+      ALLOWED_PREFIXES: "885"                      # GS1 Thailand prefix range served by this resolver
+      REDIRECT_STATUS: "307"                       # ADR-002
+      DATA_FILE: ${DATA_FILE:-/app/data/linksets.json}   # e.g. DATA_FILE=/app/data/generated/linksets-100000.json
+      INGEST_TOKEN: ${INGEST_TOKEN:-}              # empty → Link Ingest API disabled (ADR-008)
+      LOG_REQUESTS: ${LOG_REQUESTS:-1}             # set 0 while measuring latency
+    volumes:
+      - ./data:/app/data:ro                        # generated datasets are used without rebuilding the image
+    deploy:
+      resources:
+        limits: { cpus: "1.0", memory: 512M }      # keep equal to GS1 Resolver CE when benchmarking

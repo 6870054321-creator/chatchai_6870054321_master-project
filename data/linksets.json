@@ -1,0 +1,92 @@
+{
+  "01/08859999000018": {
+    "links": {
+      "https://gs1.org/voc/defaultLink": [
+        {
+          "href": "https://smartcatalog.example/catalog/Product/08859999000018?lang=th",
+          "title": "ข้อมูลผลิตภัณฑ์",
+          "hreflang": [
+            "th"
+          ],
+          "type": "text/html"
+        },
+        {
+          "href": "https://smartcatalog.example/catalog/Product/08859999000018?lang=en",
+          "title": "Product information",
+          "hreflang": [
+            "en"
+          ],
+          "type": "text/html"
+        },
+        {
+          "href": "https://data.example/dpp/08859999000018.jsonld",
+          "title": "Product data (JSON-LD)",
+          "type": "application/ld+json"
+        }
+      ],
+      "https://gs1.org/voc/pip": [
+        {
+          "href": "https://brand.example/th/products/08859999000018",
+          "title": "หน้าผลิตภัณฑ์ของเจ้าของแบรนด์",
+          "hreflang": [
+            "th"
+          ],
+          "type": "text/html"
+        },
+        {
+          "href": "https://brand.example/en/products/08859999000018",
+          "title": "Brand product page",
+          "hreflang": [
+            "en"
+          ],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/certificationInfo": [
+        {
+          "href": "https://member.example/cert/08859999000018.pdf",
+          "title": "Certificate",
+          "type": "application/pdf"
+        }
+      ]
+    }
+  },
+  "01/08859999000018/10/LOT01": {
+    "links": {
+      "https://gs1.org/voc/defaultLink": [
+        {
+          "href": "https://smartcatalog.example/catalog/Product/08859999000018/lot/LOT01",
+          "title": "ข้อมูลรุ่นการผลิต LOT01",
+          "hreflang": [
+            "th"
+          ],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/pip": [
+        {
+          "href": "https://smartcatalog.example/catalog/Product/08859999000018?lang=th",
+          "title": "ข้อมูลผลิตภัณฑ์",
+          "hreflang": [
+            "th"
+          ],
+          "type": "text/html"
+        }
+      ]
+    }
+  },
+  "01/08859999000025": {
+    "links": {
+      "https://gs1.org/voc/defaultLink": [
+        {
+          "href": "https://smartcatalog.example/catalog/Product/08859999000025",
+          "title": "ข้อมูลผลิตภัณฑ์",
+          "hreflang": [
+            "th"
+          ],
+          "type": "text/html"
+        }
+      ]
+    }
+  }
+}
