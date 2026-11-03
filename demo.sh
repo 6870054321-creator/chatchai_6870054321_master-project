@@ -118,7 +118,13 @@ if curl -sf "$B/health" >/dev/null 2>&1; then
   ing=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $TOKEN" "$B/api/v1/linksets/01/$G")
   case "$ing" in
     200) ;;
-    404) echo "${RED}server นี้ไม่ได้เปิด Link Ingest API ให้ปิดแล้วเปิดใหม่ด้วย: npm run demo:server${NC}"; exit 1 ;;
+    404)
+      echo "${RED}server ที่เปิดอยู่ที่พอร์ต $PORT ไม่ได้เปิด Link Ingest API (น่าจะเปิดด้วย npm start)${NC}"
+      pids=$(lsof -ti ":$PORT" 2>/dev/null | tr '\n' ' ')
+      echo "  1) ปิดตัวเดิม:   ${BOLD}kill ${pids:-<PID>}${NC}   (ถ้าเป็นคอนเทนเนอร์ ใช้ docker compose down)"
+      echo "  2) เปิดใหม่:     ${BOLD}npm run demo:server${NC}   ใน Terminal A"
+      echo "  3) แล้วรัน:      ${BOLD}npm run demo${NC}   อีกครั้ง"
+      exit 1 ;;
     403) echo "${RED}โทเค็นไม่ตรงกับ server ให้รันด้วย INGEST_TOKEN=<โทเค็นของ server> bash demo.sh${NC}"; exit 1 ;;
     *)   echo "${RED}ตรวจ Link Ingest API ไม่ผ่าน (HTTP $ing)${NC}"; exit 1 ;;
   esac
