@@ -15,3 +15,12 @@ services:
     deploy:
       resources:
         limits: { cpus: "1.0", memory: 512M }      # keep equal to GS1 Resolver CE when benchmarking
+
+  # Redis — reserved for persistence layer (ADR-007); not yet wired to linkset-layer
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 128M }

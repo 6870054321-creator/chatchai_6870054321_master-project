@@ -37,6 +37,10 @@ export function createApp({ config, store }) {
     if (url.pathname === '/.well-known/gs1resolver') {
       return { status: 200, headers: { 'Content-Type': 'application/json' }, body: description };
     }
+    if (url.pathname === '/health') {
+      const s = store.stats();
+      return { status: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'ok', links_loaded: s.links }) };
+    }
     try {
       const parsed = parse(url.pathname, url.searchParams);   // 1
       const valid = validate(parsed, config);                // 2
