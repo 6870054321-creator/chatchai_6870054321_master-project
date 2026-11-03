@@ -33,20 +33,20 @@ GS1 Digital Link spec กำหนด media type `application/linkset+json` ส�
 | กรณีทดสอบ | Accept header | ผลที่คาดหวัง |
 |---|---|---|
 | T-05 | `application/linkset+json` | 200 + linkset JSON |
-| T-06 | `application/json` | 200 + linkset JSON (ถือเทียบเท่า) |
+| กรณีเสริม (ยังไม่มีรหัส) | `application/json` | 200 + linkset JSON (ถือเทียบเท่า) |
 | กรณีเสริม | `application/json; q=0.9, */*; q=0.8` | 200 + linkset JSON |
 
 ## การตัดสินใจ
 
 **เลือกทางเลือกที่ 1:** ถือว่า `application/json` เทียบเท่ากับ `application/linkset+json`
 
-GS1 Digital Link Technical Standard §10.5 กำหนดให้ resolver "SHOULD" รองรับ `application/json` เป็น alias ของ `application/linkset+json` เพื่อความ backward compatible กับ client ที่ไม่รู้จัก media type ใหม่ การตอบ 406 จะทำให้ developer ที่เริ่มทดสอบระบบสะดุดโดยไม่จำเป็น
+GS1-Conformant Resolver Standard [4] §2.10 กำหนดว่าเมื่อ Accept เป็น `application/linkset+json` ต้องคืนชุดลิงก์ตาม RFC 9264 (SHALL) และแนะนำ (RECOMMENDED) ให้คืนคำตอบเดียวกันเมื่อ Accept เป็น `application/json` ซึ่งช่วยให้ client ที่ยังไม่รู้จัก media type ใหม่ใช้งานได้ การตอบ 406 จะทำให้ developer ที่เริ่มทดสอบระบบสะดุดโดยไม่จำเป็น
 
 ## ผลที่ตามมา
 
 **ข้อดี:**
 - Developer-friendly — ทดสอบด้วย curl ธรรมดาได้ทันที
-- สอดคล้องกับ GS1 spec ระดับ SHOULD
+- เป็นไปตามคำแนะนำ (RECOMMENDED) ใน §2.10 ของมาตรฐาน
 - ลด friction สำหรับ integration กับ system อื่น
 
 **ข้อเสีย:**

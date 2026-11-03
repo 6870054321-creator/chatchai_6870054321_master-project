@@ -18,6 +18,9 @@
     "start:10k": "DATA_FILE=data/generated/linksets-10000.json LOG_REQUESTS=0 node src/server.js",
     "start:100k": "DATA_FILE=data/generated/linksets-100000.json LOG_REQUESTS=0 node src/server.js",
     "bench:10k": "node tests/bench.js --data data/generated/linksets-10000.json --label poc-10k",
-    "bench:100k": "node tests/bench.js --data data/generated/linksets-100000.json --label poc-100k"
+    "bench:100k": "node tests/bench.js --data data/generated/linksets-100000.json --label poc-100k",
+    "demo": "bash demo.sh",
+    "demo:auto": "bash demo.sh --auto",
+    "demo:server": "INGEST_TOKEN=demo-secret node src/server.js"
   }
 }

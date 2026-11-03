@@ -39,19 +39,21 @@ GS1 Resolver CE ใช้ `SESSION_TOKEN` เป็น shared secret สำห�
 
 ## พฤติกรรมของต้นแบบในปัจจุบัน
 
-`src/ingest/ingestApi.js` ตรวจ `Authorization: Bearer <token>` ทุก write request เทียบกับ `process.env.INGEST_TOKEN`:
-- ถ้า `INGEST_TOKEN` ไม่ได้ตั้งค่า → ทุก write request ถูกปฏิเสธด้วย 503
-- ถ้า token ไม่ตรง → 401 Unauthorized
+`src/ingest/ingestApi.js` ตรวจ `Authorization: Bearer <token>` ทุกคำขอที่ `/api/v1/linksets/…` (GET, PUT, DELETE) เทียบกับ `INGEST_TOKEN` ด้วยการเปรียบเทียบแบบเวลาคงที่ (`timingSafeEqual`):
+- ถ้า server ไม่ได้ตั้ง `INGEST_TOKEN` → ปิด API ตอบ 404
+- ถ้าคำขอไม่มีส่วนหัว Authorization → 401 Unauthorized
+- ถ้า token ไม่ตรง → 403 Forbidden
 - ถ้า token ถูกต้อง → ดำเนินการต่อ
 
 ## หลักฐานที่ใช้ตัดสินใจ
 
 | กรณีทดสอบ | เงื่อนไข | ผลที่คาดหวัง |
 |---|---|---|
-| Unit test `access control` | ไม่มี token | 503 Service Unavailable |
-| Unit test `access control` | token ผิด | 401 Unauthorized |
-| Unit test `access control` | token ถูกต้อง | 200/201 |
-| เปรียบเทียบกับ CE | SESSION_TOKEN pattern | พฤติกรรมเดียวกัน |
+| Unit test `access control` | server ไม่ได้ตั้ง `INGEST_TOKEN` | 404 (ปิด API) |
+| Unit test `access control` | คำขอไม่มีส่วนหัว Authorization | 401 Unauthorized |
+| Unit test `access control` | token ผิด | 403 Forbidden |
+| Unit test `PUT creates…` | token ถูกต้อง | 201 สร้างใหม่ / 200 แทนที่ |
+| เปรียบเทียบกับ CE | `SESSION_TOKEN` | ตามซอร์สโค้ด CE ตอบ 401 เมื่อไม่มีส่วนหัว และ 403 เมื่อ token ผิด เหมือนกัน |
 
 ## การตัดสินใจ
 

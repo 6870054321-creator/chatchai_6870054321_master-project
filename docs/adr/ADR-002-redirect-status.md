@@ -14,14 +14,14 @@
 ## ทางเลือกที่พิจารณา
 
 1. **302 Found**
-   - พฤติกรรม: browser อาจเปลี่ยน POST → GET (RFC 7231 §6.4.3 อนุญาตให้ทำได้)
+   - พฤติกรรม: browser อาจเปลี่ยน POST → GET (RFC 9110 §15.4.3 อนุญาตให้ทำได้)
    - ใช้งานมาก แต่ semantics ไม่ชัดเจนตาม spec
-   - Resolver CE รุ่นเก่าใช้รหัสนี้
+   - ระบบปัจจุบันของสถาบันฯ ใช้รหัสนี้ (ผลทดสอบ ส.ค. 2569)
 
 2. **307 Temporary Redirect** ✓
-   - พฤติกรรม: browser ต้องใช้ method เดิมเสมอ (RFC 7231 §6.4.7)
+   - พฤติกรรม: browser ต้องใช้ method เดิมเสมอ (RFC 9110 §15.4.8)
    - บอกว่า URL ของ resolver คงที่แต่ปลายทางอาจเปลี่ยนได้ตาม content negotiation
-   - GS1 Resolver CE รุ่นปัจจุบันใช้รหัสนี้
+   - GS1 Resolver CE (bf885fd) ใช้รหัสนี้เมื่อเหลือลิงก์เดียว (อ่านจากซอร์สโค้ด)
 
 3. **308 Permanent Redirect / 301 Moved Permanently**
    - บอกว่าลิงก์ถาวร — ไม่เหมาะกับ resolver ที่ปลายทางเปลี่ยนได้ตามข้อมูลในฐาน
@@ -37,9 +37,9 @@
 |---|---|---|
 | T-01 | Default link, ไม่มี linkType | 307 → URL ของ default link |
 | T-03 | linkType=gs1:pip ตรงกับ 1 ลิงก์ | 307 → URL ของ pip |
-| T-06 | Accept-Language: th | 307 → URL ภาษาไทย |
+| T-06 | Accept: application/ld+json | 307 → URL ของข้อมูล JSON-LD |
 | T-07 | Accept-Language: en | 307 → URL ภาษาอังกฤษ |
-| T-08 | qualifier fallback | 307 → URL จากระดับ GTIN |
+| T-08 | `/10/LOT01` มีชุดลิงก์ระดับรุ่นการผลิต | 307 → URL ระดับรุ่นการผลิต |
 
 รันซ้ำด้วย `REDIRECT_STATUS=302` และ `REDIRECT_STATUS=307` แล้วเปรียบเทียบกับผลของ Resolver CE
 
@@ -47,12 +47,12 @@
 
 **เลือกทางเลือกที่ 2: 307 Temporary Redirect** เป็นค่าเริ่มต้น
 
-GS1 Digital Link Technical Standard §10.2 แนะนำ 307 เพราะ URL ของ resolver คงที่ (permanent endpoint) แต่ปลายทางที่ resolve ไปนั้นขึ้นกับ content negotiation และข้อมูลที่ลงทะเบียนไว้ ซึ่งอาจเปลี่ยนแปลงได้ การคง `REDIRECT_STATUS` เป็น env var ทำให้ผู้ดูแลระบบปรับได้หากนโยบาย GS1 Thailand เปลี่ยน
+ผังงานพื้นฐานของรีโซลเวอร์ (Figure 2-1 ใน §2.2 ของ GS1-Conformant Resolver Standard [4]) ใช้ 307 ในขั้นเปลี่ยนเส้นทาง ส่วนเนื้อหาของมาตรฐานไม่ได้บังคับรหัส 3xx ใดเป็นการเฉพาะ เหตุผลที่เลือก 307 คือ URL ของ resolver คงที่ (permanent endpoint) แต่ปลายทางขึ้นกับ content negotiation และข้อมูลที่ลงทะเบียนไว้ ซึ่งเปลี่ยนแปลงได้ จึงเป็นการเปลี่ยนเส้นทางชั่วคราวตามความหมายใน RFC 9110 §15.4.8 การคง `REDIRECT_STATUS` เป็น env var ทำให้ผู้ดูแลระบบปรับได้หากนโยบาย GS1 Thailand เปลี่ยน
 
 ## ผลที่ตามมา
 
 **ข้อดี:**
-- สอดคล้องกับ GS1 Resolver CE และ GS1 spec
+- สอดคล้องกับ Figure 2-1 ของมาตรฐาน และพฤติกรรมของ Resolver CE ตามซอร์สโค้ด
 - Browser preserve HTTP method — ไม่เกิดการเปลี่ยน POST → GET โดยไม่ตั้งใจ
 - ทดสอบเปรียบเทียบกับ CE ได้โดยตรง
 

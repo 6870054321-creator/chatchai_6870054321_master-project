@@ -12,7 +12,7 @@ GS1 Resolver ใช้ content negotiation — URL เดียวกัน (เ
 
 หากมี CDN (เช่น Cloudflare) อยู่ด้านหน้า CDN จะต้อง cache response แยกกันสำหรับแต่ละ combination ของ header เหล่านี้ มิฉะนั้น user ที่ขอภาษาอังกฤษอาจได้ response ที่ cache ไว้สำหรับภาษาไทย
 
-ส่วนหัว `Vary` เป็นกลไกมาตรฐาน HTTP (RFC 7231 §7.1.4) สำหรับบอก CDN ว่า cache key ต้องประกอบด้วย field อะไรบ้าง
+ส่วนหัว `Vary` เป็นกลไกมาตรฐาน HTTP (RFC 9110 §12.5.5) สำหรับบอก CDN ว่า cache key ต้องประกอบด้วย field อะไรบ้าง
 
 ## ทางเลือกที่พิจารณา
 
@@ -37,21 +37,21 @@ GS1 Resolver ใช้ content negotiation — URL เดียวกัน (เ
 | กรณีทดสอบ | ตรวจอะไร | ผลที่คาดหวัง |
 |---|---|---|
 | T-05 | Accept: application/linkset+json | Vary header ปรากฏใน response |
-| T-06 | Accept-Language: th | Vary: Accept, Accept-Language |
+| T-06 | Accept: application/ld+json | Vary: Accept, Accept-Language |
 | T-07 | Accept-Language: en | Vary: Accept, Accept-Language |
-| การวัด cache | อัตรา cache hit หลัง warm-up | > 80% สำหรับ GTIN ที่ query บ่อย |
+| การวัด cache | อัตรา cache hit หลัง warm-up | ยังไม่ได้วัด (ต้องวัดที่บริการเครือข่ายด้านหน้าหลังติดตั้งจริง) |
 
 ## การตัดสินใจ
 
 **เลือกทางเลือกที่ 1:** ใส่ `Vary: Accept, Accept-Language` ทุก response ที่ผ่าน content negotiation
 
-RFC 7231 §7.1.4 กำหนดให้ origin server ระบุ `Vary` เมื่อ response ขึ้นกับ request header ใด ๆ การละเว้น `Vary` อาจทำให้ CDN serve wrong response ให้ user ซึ่งเป็น correctness bug ไม่ใช่แค่ performance issue
+RFC 9110 §12.5.5 ระบุว่า origin server ควร (SHOULD) ส่ง `Vary` เมื่อการเลือก representation ขึ้นกับส่วนของคำขอนอกเหนือจาก method และ URI การละเว้น `Vary` อาจทำให้ CDN serve wrong response ให้ user ซึ่งเป็น correctness bug ไม่ใช่แค่ performance issue
 
 ## ผลที่ตามมา
 
 **ข้อดี:**
 - CDN cache ถูกต้อง — ไม่มีการ serve ภาษาผิด หรือ JSON ให้ browser ที่ขอ redirect
-- สอดคล้องกับ RFC 7231 และ GS1 spec §10.5
+- สอดคล้องกับ RFC 9110 §12.5.5 (GS1-Conformant Resolver Standard ไม่ได้กล่าวถึง Vary โดยตรง)
 
 **ข้อเสีย:**
 - `Vary` กว้างทำให้ cache hit rate ลดลง เพราะต้องแยก entry ตาม Accept combination

@@ -14,7 +14,7 @@
 | 4.2.1 | ที่จัดเก็บชุดลิงก์ (Linkset Store) | `src/store/linksetStore.js` |
 | 4.2.1 | ส่วนต่อประสานนำเข้าลิงก์ (Link Ingest API) ใช้กฎตรวจสอบชุดเดียวกับชั้นที่ 2 | `src/ingest/ingestApi.js`, `src/ingest/linksetSchema.js` |
 | 4.2.1, 4.2.4 | แฟ้มพรรณนารีโซลเวอร์ `/.well-known/gs1resolver` | `src/app.js` |
-| 7.5 | ADR ไม่น้อยกว่า 8 รายการ (ตอนนี้มีโครง 10 รายการ สถานะ Proposed) | `docs/adr/` |
+| 7.5 | ADR 10 รายการ (โครงร่างกำหนดไม่น้อยกว่า 8) | `docs/adr/` |
 | 7.6 | ข้อมูลสังเคราะห์ 10,000 และ 100,000 ลิงก์ | `scripts/generate-data.js`, `scripts/profile.default.json` |
 | 7.7 | ชุดกรณีทดสอบเดียวกันสำหรับทั้งสามระบบ รันหลายรอบ บันทึกสภาพแวดล้อม | `tests/cases.js`, `tests/run-cases.js` |
 | 7.7 | เวลาตอบสนอง P50 / P95 (ต้นแบบ กับ Resolver CE) | `tests/bench.js` |
@@ -28,6 +28,17 @@ npm test                       # unit test (16 กรณี)
 npm run probe                  # T-01–T-12 + กรณีเสริม กับ http://localhost:8080
 npm run probe:3rounds          # รันซ้ำ 3 รอบ
 ```
+
+## สาธิต
+
+```bash
+npm run demo           # สาธิตทีละขั้น กด Enter เพื่อไปต่อ (เปิด server ให้เองถ้ายังไม่เปิด)
+npm run demo:auto      # ซ้อมรอบเดียวแบบไม่หยุด
+npm run demo:server    # เปิด server พร้อม Link Ingest API (โทเค็น demo-secret) ไว้ใน Terminal อีกหน้าต่าง
+```
+
+ขั้นตอน หน้าต่างที่ต้องเปิด บทพูด และคำถามที่อาจถูกถาม อยู่ใน [DEMO.md](DEMO.md)
+`GET /health` ตอบสถานะและจำนวนลิงก์ที่โหลด
 
 ## ข้อมูลสังเคราะห์ (ขั้นตอน 7.6)
 
@@ -129,5 +140,4 @@ BASE_URL=http://localhost:<port> node tests/bench.js --data data/generated/links
 - รองรับเฉพาะกุญแจหลัก 01 (GTIN)
 - ยังไม่ต่อกับชุดทดสอบความสอดคล้องอย่างเป็นทางการของ GS1
 - เกณฑ์ "ผ่าน" ของ T-03, T-06–T-08 เทียบกับ Location ของ T-01 จึงเป็นการตรวจเชิงพฤติกรรม ไม่ใช่การทดสอบความสอดคล้องเต็มรูปแบบ
-- ทุกการตัดสินใจใน `docs/adr/` ยังเป็นค่าชั่วคราว
 - ที่จัดเก็บเป็นแฟ้ม JSON ในหน่วยความจำ (ADR-006)
