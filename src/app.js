@@ -3,11 +3,11 @@
 //   Read path : URI Parser → Identifier Validator → Linkset Resolver → Content Negotiator → Response Builder
 //   Write path: Link Ingest API → (same parser + validator) → Linkset Store
 //   Discovery : /.well-known/gs1resolver (Resolver Description File)
-import { parse } from './pipeline/parser.js';
-import { validate } from './pipeline/validator.js';
-import { resolve } from './pipeline/linksetResolver.js';
-import { negotiate } from './pipeline/contentNegotiator.js';
-import { build, buildError } from './pipeline/responseBuilder.js';
+import { parse } from './pipeline/01_parser.js';
+import { validate } from './pipeline/02_validator.js';
+import { resolve } from './pipeline/03_linksetResolver.js';
+import { negotiate } from './pipeline/04_contentNegotiator.js';
+import { build, buildError } from './pipeline/05_responseBuilder.js';
 import { handleIngest, INGEST_PREFIX } from './ingest/ingestApi.js';
 
 export function resolverDescription(config) {

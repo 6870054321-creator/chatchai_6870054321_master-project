@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createApp } from '../src/app.js';
 import { LinksetStore } from '../src/store/linksetStore.js';
-import { negotiate } from '../src/pipeline/contentNegotiator.js';
+import { negotiate } from '../src/pipeline/04_contentNegotiator.js';
 
 const config = { resolverRoot: 'http://r.test', allowedPrefixes: ['885'], redirectStatus: 307, ingestToken: 'tok', persist: false };
 const AUTH = { authorization: 'Bearer tok', 'content-type': 'application/json' };

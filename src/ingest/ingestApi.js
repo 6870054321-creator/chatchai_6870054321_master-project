@@ -8,9 +8,9 @@
 // that the resolver would answer with 400/404 can never be registered in the first place (ADR-001).
 // Access: Authorization: Bearer <INGEST_TOKEN>; the API is disabled when INGEST_TOKEN is empty (ADR-008).
 import { timingSafeEqual } from 'node:crypto';
-import { parse } from '../pipeline/parser.js';
-import { validate } from '../pipeline/validator.js';
-import { keyFor } from '../pipeline/linksetResolver.js';
+import { parse } from '../pipeline/01_parser.js';
+import { validate } from '../pipeline/02_validator.js';
+import { keyFor } from '../pipeline/03_linksetResolver.js';
 import { validateLinksetBody } from './linksetSchema.js';
 
 export const INGEST_PREFIX = '/api/v1/linksets';

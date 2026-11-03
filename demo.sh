@@ -43,7 +43,6 @@ PASS=0; FAIL=0; STARTED=0; SERVER_PID=; MARK=
 
 # ── helpers ────────────────────────────────────────────────────────────────
 title()  { echo; echo "${BOLD}${YEL}━━ ขั้นที่ $1  $2 ━━${NC}"; }
-say()    { echo "${CYN}พูด: $*${NC}"; }
 note()   { echo "${DIM}$*${NC}"; }
 pause()  { [ "$AUTO" = 1 ] && return 0; printf "\n${DIM}กด Enter เพื่อไปต่อ…${NC}"; read -r _ || true; }
 openurl(){ [ "$BROWSER" = 1 ] && open "$1" >/dev/null 2>&1; return 0; }
@@ -155,18 +154,17 @@ pause
 
 # ── ขั้นที่ 1 ────────────────────────────────────────────────────────────────
 title 1 "สถาปัตยกรรม: ท่อประมวลผล 5 ชั้น (รูป 4.3)"
-for row in "1|URI Parser|แยกกุญแจหลัก ตัวขยายกุญแจ และพารามิเตอร์|src/pipeline/parser.js" \
-           "2|Identifier Validator|ไวยากรณ์ Mod-10 และช่วงเลขบ่งชี้บริษัท|src/pipeline/validator.js" \
-           "3|Linkset Resolver|ค้นชุดลิงก์ เลือก linkType หรือลิงก์ปริยาย|src/pipeline/linksetResolver.js" \
-           "4|Content Negotiator|Accept / Accept-Language และ Vary|src/pipeline/contentNegotiator.js" \
-           "5|Response Builder|3xx / 200 ชุดลิงก์ / 400 / 404|src/pipeline/responseBuilder.js"; do
+for row in "1|URI Parser|แยกกุญแจหลัก ตัวขยายกุญแจ และพารามิเตอร์|src/pipeline/01_parser.js" \
+           "2|Identifier Validator|ไวยากรณ์ Mod-10 และช่วงเลขบ่งชี้บริษัท|src/pipeline/02_validator.js" \
+           "3|Linkset Resolver|ค้นชุดลิงก์ เลือก linkType หรือลิงก์ปริยาย|src/pipeline/03_linksetResolver.js" \
+           "4|Content Negotiator|Accept / Accept-Language และ Vary|src/pipeline/04_contentNegotiator.js" \
+           "5|Response Builder|3xx / 200 ชุดลิงก์ / 400 / 404|src/pipeline/05_responseBuilder.js"; do
   IFS='|' read -r n name what file <<<"$row"
   printf "  ${BOLD}%s  %-21s${NC} %s\n" "$n" "$name" "$file ($(wc -l <"$file" | tr -d ' ') บรรทัด)"
   echo "     ${DIM}$what${NC}"
 done
 echo
 echo "  เส้นทางเขียน: Link Ingest API → parser + validator ตัวเดียวกัน → Linkset Store   ${DIM}src/ingest/, src/store/${NC}"
-say "ชั้นนี้แทรกหน้า GS1TH Smart Catalog โดยไม่แก้ระบบเดิม ลำดับชั้นตั้งใจให้ตรวจความถูกต้องก่อนค้นข้อมูลเสมอ"
 pause
 
 # ── ขั้นที่ 2 ────────────────────────────────────────────────────────────────
@@ -183,7 +181,6 @@ echo
 echo "  ${BOLD}T-02 / T-05${NC}  ขอชุดลิงก์ทั้งชุด"
 MAXLINES=22 call "T-05" "Accept: application/linkset+json → 200 ชุดลิงก์" 200 -H 'Accept: application/linkset+json' "$B/01/$G"
 openurl "$B/01/$G?linkType=linkset"
-say "ที่อยู่บน QR มีที่เดียว ผู้เรียกแต่ละกลุ่มได้ทรัพยากรต่างกัน ระบบปัจจุบันตอบ 302 ไปหน้าสแกนเดียวกันทุกกรณี"
 pause
 
 # ── ขั้นที่ 3 ────────────────────────────────────────────────────────────────
@@ -194,7 +191,6 @@ call "T-04" "ขอประเภทลิงก์ที่ไม่มี →
 call "S-02" "ใส่ AI 17 (ข้อมูลประกอบ) ใน path → 400" 400 -H "$H" "$B/01/$G/17/261231"
 call "—" "POST ที่ path ของเส้นทางอ่าน → 405" 405 -X POST "$B/01/$G"
 openurl "$B/01/08859999000019"
-say "ตัวระบุที่ผิดถูกตอบตั้งแต่ชั้นที่ 2 ไม่ถูกส่งต่อไปยังที่จัดเก็บหรือระบบปลายทาง ดูได้จาก log ใน Terminal A"
 pause
 
 # ── ขั้นที่ 4 ────────────────────────────────────────────────────────────────
@@ -218,14 +214,12 @@ call "PUT" "โทเค็นผิด → 403" 403 -X PUT -H 'Authorization: B
 echo
 call "DELETE" "ลบข้อมูลที่สร้างในขั้นนี้ → 204" 204 -X DELETE -H "$AUTH" "$B/api/v1/linksets/01/$NEW"
 call "GET" "หลังลบ → 404" 404 -H "$H" "$B/01/$NEW"
-say "ตัวระบุที่ผิดถูกปฏิเสธตั้งแต่ตอนลงทะเบียน ด้วยกฎชุดเดียวกับที่ใช้ตอบคำขอ เมื่อมาตรฐานเปลี่ยนก็แก้ที่เดียว"
 pause
 
 # ── ขั้นที่ 5 ────────────────────────────────────────────────────────────────
 title 5 "ชุดทดสอบอัตโนมัติ T-01–T-12 + S-01–S-05 ($ROUNDS รอบ)"
 note "  สคริปต์ตัวเดียวกันนี้ใช้กับระบบปัจจุบันและ Resolver CE ได้ด้วย"
 BASE_URL="$B" node tests/run-cases.js --label demo --rounds "$ROUNDS"
-say "ไฟล์ผลบันทึกเวลา คำสั่ง รุ่นซอฟต์แวร์ และสภาพแวดล้อมของทุกรอบไว้ตามขั้นตอน 7.7"
 pause
 
 # ── ขั้นที่ 6 ────────────────────────────────────────────────────────────────

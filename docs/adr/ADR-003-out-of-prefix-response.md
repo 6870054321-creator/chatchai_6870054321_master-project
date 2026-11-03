@@ -26,7 +26,7 @@
 
 ## พฤติกรรมของต้นแบบในปัจจุบัน
 
-`src/pipeline/validator.js` ตรวจ prefix และ return error object ที่ `app.js` แปลงเป็น 404 response พร้อม body อธิบายเหตุผล
+`src/pipeline/02_validator.js` ตรวจ prefix และ return error object ที่ `app.js` แปลงเป็น 404 response พร้อม body อธิบายเหตุผล
 
 ## หลักฐานที่ใช้ตัดสินใจ
 

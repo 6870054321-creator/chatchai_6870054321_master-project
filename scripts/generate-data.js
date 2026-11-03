@@ -15,8 +15,8 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { checkDigit } from '../src/pipeline/validator.js';
-import { GS1_VOC, DEFAULT_LINK } from '../src/pipeline/linksetResolver.js';
+import { checkDigit } from '../src/pipeline/02_validator.js';
+import { GS1_VOC, DEFAULT_LINK } from '../src/pipeline/03_linksetResolver.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const args = process.argv.slice(2);

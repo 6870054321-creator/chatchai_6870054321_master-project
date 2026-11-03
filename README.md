@@ -6,11 +6,11 @@
 
 | หัวข้อในโครงร่าง | ส่วนประกอบ | ไฟล์ |
 |---|---|---|
-| 4.2.2 ชั้นที่ 1 | URI Parser แยกกุญแจหลัก / ตัวขยายกุญแจ / พารามิเตอร์ | `src/pipeline/parser.js` |
-| 4.2.2 ชั้นที่ 2 | Identifier Validator ตรวจไวยากรณ์, Mod-10, ช่วงเลขบ่งชี้บริษัท | `src/pipeline/validator.js` |
-| 4.2.2 ชั้นที่ 3 | Linkset Resolver ค้นชุดลิงก์ เลือก linkType หรือลิงก์ปริยาย | `src/pipeline/linksetResolver.js` |
-| 4.2.2 ชั้นที่ 4 | Content Negotiator ใช้ Accept / Accept-Language เลือกลิงก์ และกำหนด Vary | `src/pipeline/contentNegotiator.js` |
-| 4.2.2 ชั้นที่ 5 | Response Builder ตอบ 3xx / 200 ชุดลิงก์ / 400 / 404 | `src/pipeline/responseBuilder.js` |
+| 4.2.2 ชั้นที่ 1 | URI Parser แยกกุญแจหลัก / ตัวขยายกุญแจ / พารามิเตอร์ | `src/pipeline/01_parser.js` |
+| 4.2.2 ชั้นที่ 2 | Identifier Validator ตรวจไวยากรณ์, Mod-10, ช่วงเลขบ่งชี้บริษัท | `src/pipeline/02_validator.js` |
+| 4.2.2 ชั้นที่ 3 | Linkset Resolver ค้นชุดลิงก์ เลือก linkType หรือลิงก์ปริยาย | `src/pipeline/03_linksetResolver.js` |
+| 4.2.2 ชั้นที่ 4 | Content Negotiator ใช้ Accept / Accept-Language เลือกลิงก์ และกำหนด Vary | `src/pipeline/04_contentNegotiator.js` |
+| 4.2.2 ชั้นที่ 5 | Response Builder ตอบ 3xx / 200 ชุดลิงก์ / 400 / 404 | `src/pipeline/05_responseBuilder.js` |
 | 4.2.1 | ที่จัดเก็บชุดลิงก์ (Linkset Store) | `src/store/linksetStore.js` |
 | 4.2.1 | ส่วนต่อประสานนำเข้าลิงก์ (Link Ingest API) ใช้กฎตรวจสอบชุดเดียวกับชั้นที่ 2 | `src/ingest/ingestApi.js`, `src/ingest/linksetSchema.js` |
 | 4.2.1, 4.2.4 | แฟ้มพรรณนารีโซลเวอร์ `/.well-known/gs1resolver` | `src/app.js` |
@@ -37,7 +37,6 @@ npm run demo:auto      # ซ้อมรอบเดียวแบบไม่�
 npm run demo:server    # เปิด server พร้อม Link Ingest API (โทเค็น demo-secret) ไว้ใน Terminal อีกหน้าต่าง
 ```
 
-ขั้นตอน หน้าต่างที่ต้องเปิด บทพูด และคำถามที่อาจถูกถาม อยู่ใน [DEMO.md](DEMO.md)
 `GET /health` ตอบสถานะและจำนวนลิงก์ที่โหลด
 
 ## ข้อมูลสังเคราะห์ (ขั้นตอน 7.6)

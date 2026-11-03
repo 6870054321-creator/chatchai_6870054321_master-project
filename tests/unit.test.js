@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { checkDigit, normaliseGtin, validate } from '../src/pipeline/validator.js';
-import { parse } from '../src/pipeline/parser.js';
+import { checkDigit, normaliseGtin, validate } from '../src/pipeline/02_validator.js';
+import { parse } from '../src/pipeline/01_parser.js';
 
 const cfg = { allowedPrefixes: ['885'] };
 const q = (s = '') => new URLSearchParams(s);

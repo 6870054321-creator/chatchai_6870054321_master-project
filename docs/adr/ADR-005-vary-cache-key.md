@@ -30,7 +30,7 @@ GS1 Resolver ใช้ content negotiation — URL เดียวกัน (เ
 
 ## พฤติกรรมของต้นแบบในปัจจุบัน
 
-`src/pipeline/responseBuilder.js` ใส่ `Vary: Accept, Accept-Language` ใน response ทุกครั้งที่ผ่าน content negotiation ยังไม่มีการกำหนด `Cache-Control` header สำหรับเส้นทางอ่าน (เป็น gap ที่ต้องแก้)
+`src/pipeline/05_responseBuilder.js` ใส่ `Vary: Accept, Accept-Language` ใน response ทุกครั้งที่ผ่าน content negotiation ยังไม่มีการกำหนด `Cache-Control` header สำหรับเส้นทางอ่าน (เป็น gap ที่ต้องแก้)
 
 ## หลักฐานที่ใช้ตัดสินใจ
 

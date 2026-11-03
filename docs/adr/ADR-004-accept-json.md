@@ -26,7 +26,7 @@ GS1 Digital Link spec กำหนด media type `application/linkset+json` ส�
 
 ## พฤติกรรมของต้นแบบในปัจจุบัน
 
-`src/pipeline/contentNegotiator.js` ตรวจ Accept header และถ้าพบ `application/json` หรือ `application/linkset+json` จะ return linkset ในรูปแบบ JSON (200 response)
+`src/pipeline/04_contentNegotiator.js` ตรวจ Accept header และถ้าพบ `application/json` หรือ `application/linkset+json` จะ return linkset ในรูปแบบ JSON (200 response)
 
 ## หลักฐานที่ใช้ตัดสินใจ
 

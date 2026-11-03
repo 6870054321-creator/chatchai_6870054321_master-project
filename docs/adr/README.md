@@ -4,7 +4,7 @@
 
 | ADR | ประเด็น | การตัดสินใจ | สถานะ |
 |---|---|---|---|
-| [ADR-001](ADR-001-validation-placement.md) | ตำแหน่งของการตรวจสอบตัวระบุ | เลือกทางเลือกที่ 3: ตรวจสอบทั้งสองเส้นทางด้วย validator.js โมดูลเดียว | Accepted |
+| [ADR-001](ADR-001-validation-placement.md) | ตำแหน่งของการตรวจสอบตัวระบุ | เลือกทางเลือกที่ 3: ตรวจสอบทั้งสองเส้นทางด้วย 02_validator.js โมดูลเดียว | Accepted |
 | [ADR-002](ADR-002-redirect-status.md) | รหัสสถานะสำหรับการเปลี่ยนเส้นทาง | เลือกทางเลือกที่ 2: 307 Temporary Redirect เป็นค่าเริ่มต้น | Accepted |
 | [ADR-003](ADR-003-out-of-prefix-response.md) | คำตอบสำหรับตัวระบุนอกช่วงเลขบ่งชี้บริษัท (T-11) | เลือกทางเลือกที่ 1: 404 Not Found | Accepted |
 | [ADR-004](ADR-004-accept-json.md) | การตีความ `Accept: application/json` | เลือกทางเลือกที่ 1: ถือว่า application/json เทียบเท่ากับ application/linkset+json | Accepted |

@@ -33,7 +33,7 @@ POC นี้ต้องการ benchmark เปรียบเทียบ�
 
 ## พฤติกรรมของต้นแบบในปัจจุบัน
 
-`src/store/linksetStore.js` ให้ interface `get(key)`, `put(key, value)`, `delete(key)` ที่ pipeline และ ingest API ใช้งาน ปัจจุบัน implementation เป็น in-memory Map โหลดจากไฟล์ JSON ตอน startup interface นี้เป็นแบบ synchronous การเปลี่ยนไปใช้ Redis หรือฐานข้อมูลที่เรียกผ่านเครือข่ายต้องเปลี่ยน `get()` เป็น async และปรับ `linksetResolver.js` กับ `app.js` ให้รอผล (await) ด้วย ส่วนชั้นอื่นในท่อประมวลผลไม่ต้องแก้
+`src/store/linksetStore.js` ให้ interface `get(key)`, `put(key, value)`, `delete(key)` ที่ pipeline และ ingest API ใช้งาน ปัจจุบัน implementation เป็น in-memory Map โหลดจากไฟล์ JSON ตอน startup interface นี้เป็นแบบ synchronous การเปลี่ยนไปใช้ Redis หรือฐานข้อมูลที่เรียกผ่านเครือข่ายต้องเปลี่ยน `get()` เป็น async และปรับ `03_linksetResolver.js` กับ `app.js` ให้รอผล (await) ด้วย ส่วนชั้นอื่นในท่อประมวลผลไม่ต้องแก้
 
 ## หลักฐานที่ใช้ตัดสินใจ
 

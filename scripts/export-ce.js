@@ -13,7 +13,7 @@
 // CE requires itemDescription and title; missing values are filled from the anchor / link type.
 // Differences in the two data models are a threat to validity — record them in the report (§7.7).
 import { readFileSync, writeFileSync } from 'node:fs';
-import { GS1_VOC } from '../src/pipeline/linksetResolver.js';
+import { GS1_VOC } from '../src/pipeline/03_linksetResolver.js';
 
 const args = process.argv.slice(2);
 const opt = (name, def) => { const i = args.indexOf(`--${name}`); return i > -1 ? args[i + 1] : def; };

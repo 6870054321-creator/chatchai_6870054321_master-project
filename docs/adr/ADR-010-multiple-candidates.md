@@ -30,12 +30,12 @@ GS1-Conformant Resolver Standard [4] §2.6.3 (ขั้นที่ 7 ของ�
 
 ## พฤติกรรมของต้นแบบในปัจจุบัน
 
-`src/pipeline/contentNegotiator.js` เรียง candidate ตาม:
+`src/pipeline/04_contentNegotiator.js` เรียง candidate ตาม:
 1. คะแนน media type (จาก `q` parameter ใน Accept header)
 2. คะแนนภาษา (จาก `q` parameter ใน Accept-Language header)
 3. ลำดับที่ลงทะเบียนใน linkset (index ต่ำสุดได้ก่อน)
 
-จากนั้นเลือก candidate แรกและส่งต่อให้ `responseBuilder.js` สร้าง 307 redirect
+จากนั้นเลือก candidate แรกและส่งต่อให้ `05_responseBuilder.js` สร้าง 307 redirect
 
 ## หลักฐานที่ใช้ตัดสินใจ
 

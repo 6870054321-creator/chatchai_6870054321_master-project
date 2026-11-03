@@ -1,7 +1,7 @@
 // Body validation for the Link Ingest API.
-// Identifier rules are NOT here: they come from pipeline/parser.js + pipeline/validator.js (single source, ADR-001).
+// Identifier rules are NOT here: they come from pipeline/01_parser.js + pipeline/02_validator.js (single source, ADR-001).
 // This file only checks the shape of the links the member system sends.
-import { expandLinkType, GS1_VOC, DEFAULT_LINK } from '../pipeline/linksetResolver.js';
+import { expandLinkType, GS1_VOC, DEFAULT_LINK } from '../pipeline/03_linksetResolver.js';
 
 const LINK_TYPE_RE = /^[A-Za-z][A-Za-z0-9]*$/;                 // local name in the GS1 Web Vocabulary
 const LANG_RE = /^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$/;         // BCP 47 (simplified)
