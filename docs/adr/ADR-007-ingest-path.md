@@ -62,6 +62,10 @@ Push model เป็น architecture ที่ถูกต้องสำหร�
 **ข้อเสีย:**
 - ยังไม่มี bulk endpoint (รับหลาย GTIN ในครั้งเดียว) — script batch import ต้อง loop call PUT
 
+**ผลต่อ DPP:**
+- ระบบที่เก็บพาสปอร์ตเป็นผู้ลงทะเบียนที่อยู่ของพาสปอร์ตผ่าน API นี้ (`../dpp-mockup` ลงทะเบียน 21 ชุดด้วยวิธีนี้)
+- ถ้าย้ายที่เก็บพาสปอร์ต แก้เฉพาะชุดลิงก์ QR ที่พิมพ์บนสินค้าไม่ต้องเปลี่ยน
+
 **สิ่งที่ต้องทำต่อ:**
 - เขียน CSV-to-linkset conversion script สำหรับ data จริงของ user
 - พิจารณาเพิ่ม `POST /api/v1/linksets/batch` ใน production version สำหรับ bulk import

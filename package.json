@@ -1,7 +1,7 @@
 {
   "name": "gs1th-linkset-layer-poc",
   "version": "0.2.0",
-  "description": "Proof of concept: Linkset Management Layer for a GS1-conformant resolver (master project, Chulalongkorn University)",
+  "description": "Proof of concept: Linkset Management Layer for a GS1-conformant resolver, the entry point from a product QR code to its Digital Product Passport (master project, Chulalongkorn University)",
   "type": "module",
   "private": true,
   "engines": {

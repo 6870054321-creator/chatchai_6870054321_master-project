@@ -7,6 +7,8 @@
 // Identifier checks reuse stage 1 (parser) and stage 2 (validator) of the request pipeline, so an identifier
 // that the resolver would answer with 400/404 can never be registered in the first place (ADR-001).
 // Access: Authorization: Bearer <INGEST_TOKEN>; the API is disabled when INGEST_TOKEN is empty (ADR-008).
+// DPP: the system that hosts the passports registers their addresses here. If the passports move, only the
+// linkset changes; the QR code printed on the product stays the same.
 import { timingSafeEqual } from 'node:crypto';
 import { parse } from '../pipeline/01_parser.js';
 import { validate } from '../pipeline/02_validator.js';

@@ -1,6 +1,8 @@
 // Stage 4 — Content Negotiator
 // Chooses one link among candidates using Accept (vs link.type) and Accept-Language (vs link.hreflang),
 // and records which request headers influenced the response (→ Vary).
+// DPP: one gs1:dpp link type can hold a passport page per language and a JSON-LD passport for machines;
+// this stage decides which one the caller gets.
 
 function parseQList(header) {
   if (!header) return [];

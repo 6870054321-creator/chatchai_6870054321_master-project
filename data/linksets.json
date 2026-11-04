@@ -1,21 +1,18 @@
 {
   "01/08859999000018": {
+    "itemDescription": "สินค้าตัวอย่าง (มีข้อมูล DPP)",
     "links": {
       "https://gs1.org/voc/defaultLink": [
         {
           "href": "https://smartcatalog.example/catalog/Product/08859999000018?lang=th",
           "title": "ข้อมูลผลิตภัณฑ์",
-          "hreflang": [
-            "th"
-          ],
+          "hreflang": ["th"],
           "type": "text/html"
         },
         {
           "href": "https://smartcatalog.example/catalog/Product/08859999000018?lang=en",
           "title": "Product information",
-          "hreflang": [
-            "en"
-          ],
+          "hreflang": ["en"],
           "type": "text/html"
         },
         {
@@ -28,17 +25,13 @@
         {
           "href": "https://brand.example/th/products/08859999000018",
           "title": "หน้าผลิตภัณฑ์ของเจ้าของแบรนด์",
-          "hreflang": [
-            "th"
-          ],
+          "hreflang": ["th"],
           "type": "text/html"
         },
         {
           "href": "https://brand.example/en/products/08859999000018",
           "title": "Brand product page",
-          "hreflang": [
-            "en"
-          ],
+          "hreflang": ["en"],
           "type": "text/html"
         }
       ],
@@ -47,6 +40,39 @@
           "href": "https://member.example/cert/08859999000018.pdf",
           "title": "Certificate",
           "type": "application/pdf"
+        }
+      ],
+      "https://gs1.org/voc/sustainabilityInfo": [
+        {
+          "href": "https://dpp.example/sustainability/08859999000018?lang=th",
+          "title": "ข้อมูลความยั่งยืน (Carbon Footprint)",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/sustainability/08859999000018?lang=en",
+          "title": "Sustainability & Carbon Footprint",
+          "hreflang": ["en"],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/dpp": [
+        {
+          "href": "https://dpp.example/passport/08859999000018.jsonld",
+          "title": "Digital Product Passport (JSON-LD)",
+          "type": "application/ld+json"
+        },
+        {
+          "href": "https://dpp.example/passport/08859999000018?lang=th",
+          "title": "หนังสือเดินทางผลิตภัณฑ์ดิจิทัล",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/passport/08859999000018?lang=en",
+          "title": "Digital Product Passport",
+          "hreflang": ["en"],
+          "type": "text/html"
         }
       ]
     }
@@ -57,9 +83,7 @@
         {
           "href": "https://smartcatalog.example/catalog/Product/08859999000018/lot/LOT01",
           "title": "ข้อมูลรุ่นการผลิต LOT01",
-          "hreflang": [
-            "th"
-          ],
+          "hreflang": ["th"],
           "type": "text/html"
         }
       ],
@@ -67,10 +91,28 @@
         {
           "href": "https://smartcatalog.example/catalog/Product/08859999000018?lang=th",
           "title": "ข้อมูลผลิตภัณฑ์",
-          "hreflang": [
-            "th"
-          ],
+          "hreflang": ["th"],
           "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/traceability": [
+        {
+          "href": "https://dpp.example/trace/08859999000018/lot/LOT01?lang=th",
+          "title": "ข้อมูลการตามรอยรุ่นการผลิต LOT01",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/trace/08859999000018/lot/LOT01.jsonld",
+          "title": "Traceability data LOT01 (JSON-LD)",
+          "type": "application/ld+json"
+        }
+      ],
+      "https://gs1.org/voc/dpp": [
+        {
+          "href": "https://dpp.example/passport/08859999000018/lot/LOT01.jsonld",
+          "title": "Digital Product Passport — LOT01 (JSON-LD)",
+          "type": "application/ld+json"
         }
       ]
     }
@@ -81,9 +123,151 @@
         {
           "href": "https://smartcatalog.example/catalog/Product/08859999000025",
           "title": "ข้อมูลผลิตภัณฑ์",
-          "hreflang": [
-            "th"
-          ],
+          "hreflang": ["th"],
+          "type": "text/html"
+        }
+      ]
+    }
+  },
+  "01/08859999000049": {
+    "itemDescription": "สินค้าสาธิต DPP — หนังสือเดินทางผลิตภัณฑ์ดิจิทัล",
+    "links": {
+      "https://gs1.org/voc/defaultLink": [
+        {
+          "href": "https://dpp.example/passport/08859999000049?lang=th",
+          "title": "หนังสือเดินทางผลิตภัณฑ์ดิจิทัล",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/passport/08859999000049?lang=en",
+          "title": "Digital Product Passport",
+          "hreflang": ["en"],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/dpp": [
+        {
+          "href": "https://dpp.example/passport/08859999000049.jsonld",
+          "title": "Digital Product Passport (JSON-LD)",
+          "type": "application/ld+json"
+        },
+        {
+          "href": "https://dpp.example/passport/08859999000049?lang=th",
+          "title": "หนังสือเดินทางผลิตภัณฑ์ดิจิทัล",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/passport/08859999000049?lang=en",
+          "title": "Digital Product Passport",
+          "hreflang": ["en"],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/pip": [
+        {
+          "href": "https://brand.example/th/products/08859999000049",
+          "title": "หน้าผลิตภัณฑ์ของแบรนด์",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://brand.example/en/products/08859999000049",
+          "title": "Brand product page",
+          "hreflang": ["en"],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/sustainabilityInfo": [
+        {
+          "href": "https://dpp.example/sustainability/08859999000049?lang=th",
+          "title": "ข้อมูลความยั่งยืน (Carbon Footprint / วงจรชีวิตผลิตภัณฑ์)",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/sustainability/08859999000049?lang=en",
+          "title": "Sustainability Info (Carbon Footprint / LCA)",
+          "hreflang": ["en"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/sustainability/08859999000049.jsonld",
+          "title": "Sustainability data (JSON-LD)",
+          "type": "application/ld+json"
+        }
+      ],
+      "https://gs1.org/voc/certificationInfo": [
+        {
+          "href": "https://dpp.example/cert/08859999000049/iso14001.pdf",
+          "title": "ISO 14001 Environmental Management Certificate",
+          "type": "application/pdf"
+        },
+        {
+          "href": "https://dpp.example/cert/08859999000049/tisi.pdf",
+          "title": "ใบรับรองมาตรฐาน มอก.",
+          "hreflang": ["th"],
+          "type": "application/pdf"
+        }
+      ],
+      "https://gs1.org/voc/traceability": [
+        {
+          "href": "https://dpp.example/trace/08859999000049?lang=th",
+          "title": "ข้อมูลการตามรอยห่วงโซ่อุปทาน",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/trace/08859999000049.jsonld",
+          "title": "Supply chain traceability (JSON-LD)",
+          "type": "application/ld+json"
+        }
+      ],
+      "https://gs1.org/voc/safetyInfo": [
+        {
+          "href": "https://dpp.example/safety/08859999000049?lang=th",
+          "title": "ข้อมูลความปลอดภัย",
+          "hreflang": ["th"],
+          "type": "text/html"
+        },
+        {
+          "href": "https://dpp.example/safety/08859999000049?lang=en",
+          "title": "Safety information",
+          "hreflang": ["en"],
+          "type": "text/html"
+        }
+      ]
+    }
+  },
+  "01/08859999000049/10/DPP2024": {
+    "itemDescription": "รุ่นการผลิต DPP2024 — ข้อมูลย่อยระดับ Lot",
+    "links": {
+      "https://gs1.org/voc/defaultLink": [
+        {
+          "href": "https://dpp.example/passport/08859999000049/lot/DPP2024?lang=th",
+          "title": "DPP รุ่นการผลิต DPP2024",
+          "hreflang": ["th"],
+          "type": "text/html"
+        }
+      ],
+      "https://gs1.org/voc/dpp": [
+        {
+          "href": "https://dpp.example/passport/08859999000049/lot/DPP2024.jsonld",
+          "title": "Digital Product Passport — Lot DPP2024 (JSON-LD)",
+          "type": "application/ld+json"
+        }
+      ],
+      "https://gs1.org/voc/traceability": [
+        {
+          "href": "https://dpp.example/trace/08859999000049/lot/DPP2024.jsonld",
+          "title": "Traceability — Lot DPP2024 (JSON-LD)",
+          "type": "application/ld+json"
+        },
+        {
+          "href": "https://dpp.example/trace/08859999000049/lot/DPP2024?lang=th",
+          "title": "ข้อมูลการตามรอยรุ่นการผลิต DPP2024",
+          "hreflang": ["th"],
           "type": "text/html"
         }
       ]

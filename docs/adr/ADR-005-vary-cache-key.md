@@ -57,6 +57,9 @@ RFC 9110 §12.5.5 ระบุว่า origin server ควร (SHOULD) ส่�
 - `Vary` กว้างทำให้ cache hit rate ลดลง เพราะต้องแยก entry ตาม Accept combination
 - Cloudflare บางแผนไม่รองรับ `Vary: Accept-Language` — ต้องตรวจสอบ cache configuration
 
+**ผลต่อ DPP:**
+- พาสปอร์ตภาษาไทย ภาษาอังกฤษ และ JSON-LD ใช้ที่อยู่บน QR เดียวกัน ถ้าแคชไม่แยกตาม Accept และ Accept-Language ผู้เรียกอาจได้พาสปอร์ตผิดภาษาหรือผิดรูปแบบ
+
 **สิ่งที่ต้องทำต่อ:**
 - เพิ่ม `Cache-Control: public, max-age=60` สำหรับ redirect response (linkset เปลี่ยนไม่บ่อย)
 - เพิ่ม `Cache-Control: no-store` สำหรับ response ที่มีข้อมูล sensitive

@@ -1,6 +1,7 @@
 // Linkset Store (§4.2.1)
 // Holds one linkset record per identifier key ("01/{gtin14}" or "01/{gtin14}/10/{lot}" …).
 // The request pipeline only reads (get); the Link Ingest API is the only writer (put/delete).
+// DPP: the store holds where each passport is, not the passport itself.
 // Behind this small interface the backing technology can change (JSON file → Redis / MongoDB / RDBMS)
 // without touching the pipeline — that choice is ADR-006.
 import { readFileSync, writeFileSync, renameSync } from 'node:fs';

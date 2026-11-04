@@ -1,5 +1,6 @@
 // Stage 5 — Response Builder
 // Turns the decision into HTTP: redirect, linkset document, or a meaningful error status.
+// DPP: the linkset document lists every passport-related link of the product, for apps that want to choose.
 
 export function buildLinkset(res, resolverRoot) {
   const anchor = `${resolverRoot}/${res.matchedKey}`;

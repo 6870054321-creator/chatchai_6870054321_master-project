@@ -1,6 +1,7 @@
 // Stage 1 — URI Parser
 // Splits a GS1 Digital Link URI path into primary key, key qualifiers and query parameters
 // (GS1 Digital Link URI Syntax: key qualifiers live in the path, data attributes in the query string).
+// DPP: /10 (batch) and /21 (serial) carry the passport level; without them the request is for the model level.
 
 // Key qualifiers allowed after AI 01 (GTIN), in the order the standard requires: CPV, batch/lot, serial.
 const GTIN_QUALIFIERS = ['22', '10', '21'];

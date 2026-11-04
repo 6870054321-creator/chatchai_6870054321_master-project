@@ -52,5 +52,9 @@ GS1-Conformant Resolver Standard [4] §2.10 กำหนดว่าเมื่
 **ข้อเสีย:**
 - อาจทำให้ client ไม่รู้ว่า media type ที่ถูกต้องคือ `application/linkset+json`
 
+**ผลต่อ DPP:**
+- แอปที่ขอ `application/json` ได้รายการลิงก์ DPP ทุกประเภทของสินค้า (พาสปอร์ต ข้อมูลคาร์บอน ใบรับรอง ฯลฯ) ในคำขอเดียว
+- ตัวพาสปอร์ตแบบเครื่องอ่านได้ (JSON-LD) ยังต้องขอด้วย `Accept: application/ld+json` สองกรณีนี้จึงไม่ปนกัน
+
 **สิ่งที่ต้องทำต่อ:**
 - เพิ่ม `Content-Type: application/linkset+json` ใน response เสมอ แม้ client จะขอ `application/json` เพื่อ educate ว่า media type ที่ถูกต้องคืออะไร

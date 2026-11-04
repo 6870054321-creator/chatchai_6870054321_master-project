@@ -1,6 +1,7 @@
 // Stage 2 — Identifier Validator
 // Syntax, GS1 Mod-10 check digit, and membership of the GS1 Company Prefix range this resolver serves.
 // The same functions are meant to be reused by the link ingest path (single source of validation rules).
+// DPP: a mistyped or foreign identifier stops here, so it can never lead to another product's passport.
 
 export class ValidationError extends Error {
   constructor(status, title, detail) { super(detail); this.status = status; this.title = title; }

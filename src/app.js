@@ -3,6 +3,9 @@
 //   Read path : URI Parser → Identifier Validator → Linkset Resolver → Content Negotiator → Response Builder
 //   Write path: Link Ingest API → (same parser + validator) → Linkset Store
 //   Discovery : /.well-known/gs1resolver (Resolver Description File)
+//
+// Role for a Digital Product Passport (DPP): this layer is the entry point from the QR code on a product to its
+// passport data. The passports themselves live in another system (../dpp-mockup in this project).
 import { parse } from './pipeline/01_parser.js';
 import { validate } from './pipeline/02_validator.js';
 import { resolve } from './pipeline/03_linksetResolver.js';

@@ -1,6 +1,8 @@
 // Stage 3 — Linkset Resolver
 // Looks up the linkset for the identifier (most specific key first, then GTIN level)
 // and decides whether the caller wants the whole linkset or a single link type.
+// DPP: ?linkType=gs1:dpp selects the passport; gs1:sustainabilityInfo, gs1:certificationInfo, gs1:safetyInfo
+// and gs1:traceability select one part of it. A batch- or serial-level linkset is tried first (ADR-009).
 
 export const GS1_VOC = 'https://gs1.org/voc/';
 export const DEFAULT_LINK = `${GS1_VOC}defaultLink`;

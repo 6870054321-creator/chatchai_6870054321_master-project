@@ -19,6 +19,7 @@ TOKEN="${INGEST_TOKEN:-demo-secret}"
 ROUNDS="${ROUNDS:-3}"
 G=08859999000018          # GTIN ตัวอย่างของ T-01–T-12
 NEW=08859999000032        # GTIN ที่ลงทะเบียนใหม่ในขั้นที่ 4
+DPP=08859999000049        # GTIN สาธิต Digital Product Passport
 
 AUTO=0; KEEP=0; BROWSER=1
 for a in "$@"; do
@@ -173,7 +174,7 @@ H='Accept: text/html'
 check "T-01" "สแกนโดยไม่ระบุอะไร → ลิงก์ปริยาย (ไทย)" 307 "lang=th" -H "$H" -H 'Accept-Language: th' "$B/01/$G"
 check "T-03" "ขอ linkType=gs1:pip → หน้าแบรนด์" 307 "brand.example" -H "$H" "$B/01/$G?linkType=gs1:pip"
 check "T-07" "ภาษาอังกฤษ → Location เปลี่ยนตามภาษา" 307 "lang=en" -H "$H" -H 'Accept-Language: en' "$B/01/$G"
-check "T-06" "เครื่องขอ JSON-LD → ข้อมูลสำหรับเครื่อง" 307 ".jsonld" -H 'Accept: application/ld+json' "$B/01/$G"
+check "T-06" "เครื่องขอ JSON-LD → ข้อมูล DPP สำหรับเครื่อง" 307 ".jsonld" -H 'Accept: application/ld+json' "$B/01/$G"
 check "T-08" "มีตัวขยายกุญแจ /10/LOT01 → ลิงก์ระดับรุ่นการผลิต" 307 "/lot/LOT01" -H "$H" "$B/01/$G/10/LOT01"
 check "T-12" "GTIN 13 หลัก → แปลงเป็น 14 หลัก ได้ผลเดียวกับ T-01" 307 "lang=th" -H "$H" -H 'Accept-Language: th' "$B/01/${G#0}"
 check "S-01" "มีทับปิดท้าย → ได้ผลเดียวกับ T-01" 307 "lang=th" -H "$H" -H 'Accept-Language: th' "$B/01/$G/"
@@ -249,7 +250,33 @@ note "  วัดบนเครื่องเดียวกัน ยัง�
 pause
 
 # ── ขั้นที่ 7 ────────────────────────────────────────────────────────────────
-title 7 "การตัดสินใจเชิงสถาปัตยกรรม และข้อจำกัด"
+title 7 "Digital Product Passport (DPP) — หนังสือเดินทางผลิตภัณฑ์ดิจิทัล"
+note "  ต้นแบบคือทางเข้าสู่ DPP: QR บนสินค้า → รีโซลเวอร์ → ชุดลิงก์ → ข้อมูลพาสปอร์ตที่ตรงกับคำขอ"
+note "  ตัวพาสปอร์ตอยู่ที่ระบบปลายทาง ต้นแบบเก็บเฉพาะที่อยู่ของพาสปอร์ตในชุดลิงก์"
+note "  GTIN $DPP ลงทะเบียนเป็นสินค้าสาธิต DPP ใน data/linksets.json"
+echo
+echo "  ${BOLD}7a  สแกนโดยไม่ระบุ linkType → ได้ DPP หน้าหลัก (defaultLink)${NC}"
+check "DPP-01" "ผู้บริโภคสแกน → DPP ภาษาไทย" 307 "dpp.example/passport" -H 'Accept: text/html' -H 'Accept-Language: th' "$B/01/$DPP"
+check "DPP-02" "ผู้ใช้ภาษาอังกฤษสแกน → DPP ภาษาอังกฤษ" 307 "dpp.example/passport" -H 'Accept: text/html' -H 'Accept-Language: en' "$B/01/$DPP"
+echo
+echo "  ${BOLD}7b  ขอลิงก์ประเภทต่าง ๆ ตามกรณีใช้งาน DPP${NC}"
+check "DPP-03" "linkType=gs1:dpp → DPP JSON-LD สำหรับเครื่อง" 307 "dpp.example/passport" -H 'Accept: application/ld+json' "$B/01/$DPP?linkType=gs1:dpp"
+check "DPP-04" "linkType=gs1:sustainabilityInfo → ข้อมูล Carbon Footprint" 307 "dpp.example/sustainability" -H 'Accept: text/html' -H 'Accept-Language: th' "$B/01/$DPP?linkType=gs1:sustainabilityInfo"
+check "DPP-05" "linkType=gs1:certificationInfo → ใบรับรอง ISO 14001 / มอก." 307 "dpp.example/cert" -H 'Accept: text/html' "$B/01/$DPP?linkType=gs1:certificationInfo"
+check "DPP-06" "linkType=gs1:traceability → ห่วงโซ่อุปทาน" 307 "dpp.example/trace" -H 'Accept: text/html' -H 'Accept-Language: th' "$B/01/$DPP?linkType=gs1:traceability"
+check "DPP-07" "linkType=gs1:safetyInfo → ข้อมูลความปลอดภัย" 307 "dpp.example/safety" -H 'Accept: text/html' -H 'Accept-Language: th' "$B/01/$DPP?linkType=gs1:safetyInfo"
+echo
+echo "  ${BOLD}7c  ระดับ Lot — DPP ย่อยรุ่นการผลิต /10/DPP2024${NC}"
+check "DPP-08" "Lot DPP2024 → DPP ระดับ Lot" 307 "dpp.example/passport" -H 'Accept: text/html' -H 'Accept-Language: th' "$B/01/$DPP/10/DPP2024"
+check "DPP-09" "Lot DPP2024 + gs1:traceability → ตามรอยระดับ Lot" 307 "dpp.example/trace" -H 'Accept: application/ld+json' "$B/01/$DPP/10/DPP2024?linkType=gs1:traceability"
+echo
+echo "  ${BOLD}7d  ชุดลิงก์ทั้งหมดของสินค้า DPP${NC}"
+MAXLINES=40 call "DPP-10" "Accept: application/linkset+json → 200 พร้อม link type ครบทุกประเภท" 200 -H 'Accept: application/linkset+json' "$B/01/$DPP"
+openurl "$B/01/$DPP?linkType=linkset"
+pause
+
+# ── ขั้นที่ 8 ────────────────────────────────────────────────────────────────
+title 8 "การตัดสินใจเชิงสถาปัตยกรรม และข้อจำกัด"
 for f in docs/adr/ADR-0*.md; do
   id=$(basename "$f" | cut -d- -f1-2)
   name=$(head -1 "$f" | sed 's/^# ADR-[0-9]*: //')
@@ -263,6 +290,7 @@ echo "  - เกณฑ์ผ่านของ T-03 และ T-06–T-08 เป
 echo "  - ยังไม่ได้ตรวจรายข้อกับหมวด 5 ของ GS1-Conformant Resolver Standard (25 ข้อ) ซึ่งเป็นงานของขั้นตอน 7.2"
 echo "  - ผลเปรียบเทียบกับ Resolver CE และระบบปัจจุบันอยู่ในขั้นตอน 7.7"
 echo "  - ที่จัดเก็บเป็น JSON ในหน่วยความจำ (ADR-006)"
+echo "  - ต้นแบบพาไปหา DPP แต่ไม่ได้เก็บหรือตรวจเนื้อหาของพาสปอร์ต และไม่ได้ทำสิทธิ์การเข้าถึงตามบทบาท"
 
 echo
 if [ "$FAIL" = 0 ]; then
